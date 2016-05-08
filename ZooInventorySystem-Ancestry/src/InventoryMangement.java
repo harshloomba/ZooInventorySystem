@@ -92,6 +92,11 @@ public class InventoryMangement {
 			
 		}
 		
+		List<ZooInventory> zooInventroyCheck= notifyLessInventory();
+		
+		for(ZooInventory z: zooInventroyCheck)
+			System.out.println("Items against Zoo which have less remainings: "+z);
+		
 	}
 	
 	public static void updateAnimalQu_inv(AnimalQuanityEntity var)
@@ -136,6 +141,27 @@ public class InventoryMangement {
 		foodInventroy.add(var);
 		System.out.println("food inventory size: "+foodInventroy.size());
 	}
+	
+	public static List notifyLessInventory()
+	{
+		List<ZooInventory> result=new ArrayList<ZooInventory>();
 		
+		int theshold=15;
+		
+		for(FoodQuantityEntity s: foodInventroy)
+		{
+			if(s.getWeight()==1 && s.getQuantity()<25)
+			{
+				ZooInventory a=new ZooInventory();
+				a.setFood(s.getFoodItem());
+				a.setZoo(s.getZoo());
+				result.add(a);
+			}
+		}
+		
+		return result;
+		
+	}
+	
 	
 }
