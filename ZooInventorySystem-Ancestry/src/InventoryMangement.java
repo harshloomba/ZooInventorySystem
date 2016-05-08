@@ -92,19 +92,50 @@ public class InventoryMangement {
 			
 		}
 		
-			
 	}
 	
 	public static void updateAnimalQu_inv(AnimalQuanityEntity var)
 	{
+		int flag=0;
+		for(AnimalQuanityEntity temp: animalFeedInventory)
+		{
+			if(temp.getAnimalZoo().equals(var.getAnimalZoo()) && temp.getAnimal().equals(var.getAnimal()))
+			{
+				temp.setFreequencyFeedTime(var.getFreequencyFeedTime());
+				temp.setQuanityPerTime(var.getQuanityPerTime());
+				flag=1;
+				break;
+				
+			}
 			
+		}
+		
+		if(flag==0){
+		animalFeedInventory.add(var);	
+		}
+		System.out.println("size of animalFeedinventory: "+animalFeedInventory.size());
+		
 	}
 	
 	public static void updateFoodInventory(FoodQuantityEntity var)
 	{
+		if(!foodInventroy.isEmpty())
+		{
+			for(FoodQuantityEntity temp: foodInventroy)
+			{
+				if(temp.getZoo().equals(var.getZoo()) && temp.getFoodItem().equals(var.getFoodItem()))
+					{
+						temp.setWeight(0);
+						
+					}
+				
+			}
+			
+		}
+		
+		foodInventroy.add(var);
+		System.out.println("food inventory size: "+foodInventroy.size());
 	}
-	
-	
 		
 	
 }
