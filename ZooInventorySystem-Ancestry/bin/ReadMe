@@ -1,0 +1,125 @@
+First Of ALL - I have designed the model in such a way that it can be extended easily. I have used OOO
+design principals to create the model.
+
+First I have created the design and architect that design by modeling the classes
+
+So, I designed first few classes, which are mentioned below
+
+1. AnimalQuantityEntity - This class has data with respect to Zoo and within 
+that against particular animal.
+
+2. FoodQuanityEntity - This class has data of FoodItem or we may say inventory for every zoo. 
+
+3. InventoryManagement - This class acts as a service class where inventory is managed. First I 
+have designed input scanning system by which I'm accepting the essential input from user, as shown belo
+
+Enter Food Items -
+==================
+Enter ZooName : 
+G
+Enter foodName : 
+meat
+Enter Quantity : 
+5
+Enter Weight : 
+1
+food inventory size: 1
+whether u want to enter more items:
+no
+Enter AnimalData
+==================
+Enter ZooName : 
+G
+Enter AnimalName : 
+Tiger
+Enter FoodFrequency : 
+3
+Enter FoodQuantity : 
+25
+Enter AnimalFood : 
+meat
+Enter SpeciesName : 
+Tiger
+size of animalFeedinventory: 1
+whether u want to enter more items:
+yes
+Enter AnimalData
+==================
+Enter ZooName : 
+H
+Enter AnimalName : 
+Tiger3
+Enter FoodFrequency : 
+3
+Enter FoodQuantity : 
+25
+Enter AnimalFood : 
+meat
+Enter SpeciesName : 
+Tiger
+size of animalFeedinventory: 2
+whether u want to enter more items:
+no
+
+
+System keeps accepting the input unless user enters "YES". 
+
+Now once input has been accepted, next method is called to add the input data into inventory, by calling a 
+a method named as "updateFoodInventory", and change the already existing data into running 
+inventory by changing the weight into 0. Now call another method named as "updateAnimalQu_inv", which 
+is used to modify the existing feeding times and quantities given to each animal.
+
+Another method "notifyLessInventory" has been created to let the management knows that inventory is 
+less. 
+
+To support this service class, I have created few other entities which are used to keep a temporary storage 
+such as class "AnimalFeed", SpeciesFeed, ZooInventory.
+
+
+Finally with respect to the queries which we need to find out was created under the following methods 
+
+1. "getAnimalFeedDay" - This is answering the query from coding exercise i.e. "How much was each 
+individual animal fed per day on average"
+
+2. "getSpeciesFeedFreq" - This is answering the question - "How many times per day are animals fed on 
+average".
+
+3 and 4 are still not completed by I have designed the structure in such a way that it could be 
+enhanced easily. 
+
+
+Following is the the input by which I ran my code, due to 2 hour time constriant I wasn't able to test my 
+code rigorously, however I have designed it in such a manner that it could be extended easily.
+
+
+FoodItems
+
+ZooName               FoodName            Quantity        Weight
+G                      meat					20				1
+H					   meat    				30				1
+
+I have taken quantities 20 and 30 to show that "notifyLessInventory" returns only row having quantity 20
+because I have taken an assumption that "IF Quantity <25" then ask to get more inventory.
+
+
+AnimalData 
+
+ZooName               Animal				frequency			Quantity		FoodName	Species
+
+G					   Tiger3					3					25			meat		Tiger
+H					   Tiger1					3					25			meat		Tiger
+M					   Tiger2					3					25			meat		Tiger
+H					   Tiger3					3					25			meat		Tiger
+M					   Tiger1					3					25			meat		Tiger
+		 
+  
+Output
+======
+AnimalFeed [animal=Tiger3, quantity=75]
+AnimalFeed [animal=Tiger2, quantity=75]
+AnimalFeed [animal=Tiger1, quantity=75]
+SpeciesFeed [species=Tiger, averageFeedFrequency=15]
+Items against Zoo which have less remainings: ZooInventory [zoo=G, food=meat]
+
+
+
