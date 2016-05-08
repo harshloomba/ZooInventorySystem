@@ -92,6 +92,16 @@ public class InventoryMangement {
 			
 		}
 		
+		//First Query
+		List<AnimalFeed> animalFeedPerDay=getAnimalFeedDay();
+		for(AnimalFeed t:animalFeedPerDay)
+			System.out.println(t);
+		
+		//SecondQuery
+		List<SpeciesFeed> speciesFeedFrequencyPerDay=getSpeciesFeedFreq();
+		for(SpeciesFeed t:speciesFeedFrequencyPerDay)
+			System.out.println(t);
+		
 		List<ZooInventory> zooInventroyCheck= notifyLessInventory();
 		
 		for(ZooInventory z: zooInventroyCheck)
@@ -140,6 +150,84 @@ public class InventoryMangement {
 		
 		foodInventroy.add(var);
 		System.out.println("food inventory size: "+foodInventroy.size());
+	}
+	
+	
+	public static List getAnimalFeedDay()
+	{
+		List<AnimalFeed> result=new ArrayList<AnimalFeed>();
+		
+		Map<String,List<AnimalQuanityEntity>> process=new HashMap<String,List<AnimalQuanityEntity>>();
+		
+		for(AnimalQuanityEntity temp : animalFeedInventory)
+		{
+			List tempList=process.get(temp.getAnimal());
+			
+			if(tempList!=null)
+			{
+				tempList.add(temp);
+				process.put(temp.getAnimal(), tempList);
+			}
+			else {
+				List<AnimalQuanityEntity> temp2=new ArrayList<AnimalQuanityEntity>();
+				temp2.add(temp);
+				process.put(temp.getAnimal(), temp2);
+			}
+		}
+		
+		for(String s:process.keySet())
+		{
+			int sum=0;
+			List<AnimalQuanityEntity> temp=process.get(s);
+			for(AnimalQuanityEntity t: temp)
+			{
+				sum=sum+t.getFreequencyFeedTime()*t.getQuanityPerTime();
+			}
+			AnimalFeed tem=new AnimalFeed();
+			tem.setAnimal(s);
+			tem.setQuantity(sum/temp.size());
+			result.add(tem);
+		}
+		
+		return result;
+		
+	}
+	
+	public static List getSpeciesFeedFreq(){
+		List<SpeciesFeed> result=new ArrayList<SpeciesFeed>();
+		Map<String,List<AnimalQuanityEntity>> temp=new HashMap<String, List<AnimalQuanityEntity>>();
+		
+		for(AnimalQuanityEntity t : animalFeedInventory)
+		{
+			List<AnimalQuanityEntity> tempList=temp.get(t.getSpecies());
+			
+			if(tempList!=null)
+			{
+				tempList.add(t);
+				temp.put(t.getSpecies(), tempList);
+			}
+			else {
+				List<AnimalQuanityEntity> temp2=new ArrayList<AnimalQuanityEntity>();
+				temp2.add(t);
+				temp.put(t.getSpecies(), temp2);
+			}
+		}
+		
+		for(String s:temp.keySet())
+		{
+			int sum=0;
+			List<AnimalQuanityEntity> te=temp.get(s);
+			for(AnimalQuanityEntity t: te)
+			{
+				sum=sum+t.getFreequencyFeedTime();
+			}
+			SpeciesFeed tem=new SpeciesFeed();
+			tem.setSpecies(s);
+			tem.setAverageFeedFrequency(sum/temp.size());
+			result.add(tem);
+		}
+		
+		return result;
 	}
 	
 	public static List notifyLessInventory()
